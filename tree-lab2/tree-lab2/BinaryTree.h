@@ -6,12 +6,13 @@ public:
 	BinaryTree();
 	~BinaryTree();
 
-	void print_tree();
-	void insert(int value, int& error_code);
-	void remove_element(int value);
+	void print_tree(int &error_code);
+	void insert_element(int value, int& error_code);
+	void remove_element(int value, int& error_code);
 	int find_element(int value);
 	int get_height();
 	int get_nodes_count();
+	int get_even_nodes_sum();
 private:
 	class Node 
 	{

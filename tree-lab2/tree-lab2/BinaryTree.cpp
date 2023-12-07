@@ -5,7 +5,7 @@ BinaryTree::BinaryTree()
 	root = nullptr;
 }
 
-void BinaryTree::insert(int value, int& error_code)
+void BinaryTree::insert_element(int value, int& error_code)
 {
 	if (root == nullptr)
 	{
@@ -31,12 +31,15 @@ void BinaryTree::insert(int value, int& error_code)
 	error_code = 0;
 }
 
-void BinaryTree::remove_element(int value)
+void BinaryTree::remove_element(int value, int &error_code)
 {
 	if (root == nullptr)
+	{
+		error_code = 1;
 		return;
+	}
 	Node* current = root;
-	Node* previous;
+	Node* previous = current;
 
 	while (current != nullptr && value != current->value)
 	{
@@ -48,7 +51,19 @@ void BinaryTree::remove_element(int value)
 	{
 		if (current->left == nullptr && current->right == nullptr)
 		{
-			
+			current->value < previous->value ? previous->left = nullptr : previous->right = nullptr;
+		}
+		else if(current->left == nullptr)
+		{
+			current->value < previous->value ? previous->left = nullptr : previous->right = current->right;
+		}
+		else if (current->right == nullptr)
+		{
+			current->value < previous->value ? previous->left = current->left : previous->right = nullptr;
+		}
+		else
+		{
+
 		}
 	}
 }
@@ -84,8 +99,13 @@ int BinaryTree::get_nodes_max_height(Node* peak)
 	return 0;
 }
 
-void BinaryTree::print_tree()
+void BinaryTree::print_tree(int &error_code)
 {
+	if (root == nullptr)
+	{
+		error_code = 1;
+		return;
+	}
 	print_nodes(root);
 }
 
@@ -102,6 +122,11 @@ void BinaryTree::print_nodes(Node* peak)
 int BinaryTree::get_nodes_count()
 {
 	return get_nodes_count(root);
+}
+
+int BinaryTree::get_even_nodes_sum()
+{
+
 }
 
 int BinaryTree::get_nodes_count(Node* peak)

@@ -36,10 +36,22 @@ void fill_from_file(BinaryTree* tree, int& error_code)
 	while (!fs.eof())
 	{
 		fs >> temp;
-		tree->insert(temp, error_code);
+		tree->insert_element(temp, error_code);
 	}
 
 	fs.close();
+}
+
+void print_menu()
+{
+	cout << "Нажмите: " << endl;
+	cout << "1. Вставка узла" << endl;
+	cout << "2. Поиск узла" << endl;
+	cout << "3. Удаление узла" << endl; 
+	cout << "4. Вывод дерева" << endl;
+	cout << "5. Найти высоту дерева" << endl;
+	cout << "6. Количество узлов" << endl;
+	cout << "7. Определить сумму четных чисел" << endl;
 }
 
 
