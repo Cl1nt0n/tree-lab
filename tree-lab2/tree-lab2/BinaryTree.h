@@ -1,28 +1,33 @@
+#include <iostream>
+using namespace std;
 class BinaryTree
 {
 public:
+	BinaryTree();
+	~BinaryTree();
+
+	void print_tree();
+	void insert(int value, int& error_code);
+	void remove_element(int value);
+	int find_element(int value);
+	int get_height();
+	int get_nodes_count();
+private:
 	class Node 
 	{
+	public:
 		int value;
 		Node* left = nullptr;
 		Node* right = nullptr;
+
+		Node(int value)
+		{
+			this->value = value;
+		}
 	};
 
-	BinaryTree();
-	~BinaryTree();
-	//Удаление
-	void remove(int value, int& error_code);
-	//Добавление
-	void insert(int value, int& error_code);
-	//печать дерева
-	void print_tree(Node* root);
-	//поиск
-	Node* find(int value);
-	//получить корневой элемент
-	Node* get_root();
-private:
-	//корневой элемент
-	Node* _root;
-	//удаление элемента
-	void delete_tree(Node* vertex);
+	int get_nodes_count(Node* peak);
+	int get_nodes_max_height(Node* peak);
+	void print_nodes(Node* peak);
+	Node* root;
 };

@@ -42,8 +42,4 @@ void fill_from_file(BinaryTree* tree, int& error_code)
 	fs.close();
 }
 
-void print_tree(int a)
-{
-}
-
 
