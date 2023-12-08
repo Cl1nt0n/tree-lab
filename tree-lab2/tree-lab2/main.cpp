@@ -52,7 +52,7 @@ int main()
 
 			while (!(cin >> element) || element > 100 || element < 0)
 			{
-				cout << "Ошибка! Элемент должен быть числом в диапазоне между [0,100]" << endl; 
+				cout << "Ошибка! Элемент должен быть числом в диапазоне между [0,100]" << endl;
 				cin.clear();
 				cin.ignore(10000, '\n');
 			}
@@ -61,10 +61,10 @@ int main()
 			switch (error_code)
 			{
 			case 0:
-				cout << "Добавление произошло успешно!" << endl; 
+				cout << "Добавление произошло успешно!" << endl;
 				break;
 			case 1:
-				cout << "Ошибка! Элемент с таким значением уже существует!" << endl; 
+				cout << "Ошибка! Элемент с таким значением уже существует!" << endl;
 				break;
 			}
 			break;
@@ -99,13 +99,16 @@ int main()
 
 			switch (error_code)
 			{
-			case 0:cout << "Удаление произошло успешно !\n"; break;
-			case 1:cout << "Ошибка ! Элемент с таким значением не существует!\n"; break;
+			case 0:
+				cout << "Удаление произошло успешно!" << endl; 
+				break;
+			case 1:
+				cout << "Дерево пустое!" << endl; 
+				break;
+			case 2:
+				cout << "Элемент не найден!" << endl; 
+				break;
 			}
-			break;
-			tree->print_tree(error_code);
-			if (error_code == 1)
-				cout << "Дерево не содержит узлов." << endl;
 			break;
 		}
 		case 4:
@@ -130,8 +133,8 @@ int main()
 			cout << "Количество четных элементов: " << tree->get_even_nodes_sum() << '\n';
 			break;
 		}
-		default: 
-			cout << "Команда не найдена\n"; 
+		default:
+			cout << "Команда не найдена\n";
 			break;
 		}
 		cout << '\n';
