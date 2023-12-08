@@ -53,6 +53,7 @@ void BinaryTree::remove_element(int value, int& error_code)
 		value < current->value ? current = current->left : current = current->right;
 	}
 
+	Node* removed = current;
 	if (current != nullptr)
 	{
 		if (current->left == nullptr && current->right == nullptr)
@@ -69,50 +70,25 @@ void BinaryTree::remove_element(int value, int& error_code)
 		}
 		else
 		{
-			Node* right = current->right;
-			Node* previous_right = nullptr;
-			while (right->left != nullptr)
+			Node* mostLeft = current->right;
+			Node* mostLeftParent = current;
+
+			while (mostLeft->left != nullptr)
 			{
-				previous_right = right;
-				right = right->left;
+				mostLeftParent = mostLeft;
+				mostLeft = mostLeft->left;
 			}
 
-			if (previous != nullptr)
-			{
-				if (value < previous->value)
-				{
-					previous->left = right;
-					previous->left->left = current->left;
-					previous->left->right = current->right;
-					if (right->right == nullptr)
-						previous_right->left = nullptr;
-					else
-						previous_right->left = right->right;
-				}
-				else
-				{
-					previous->right = right;
-					previous->right->left = current->left;
-					previous->right->right = current->right;
-					if (right->right == nullptr)
-						previous_right->left = nullptr;
-					else
-						previous_right->left = right->right;
-				}
-			}
+			current->value = mostLeft->value;
+			removed = mostLeft;
+
+			if (mostLeftParent->left == mostLeft)
+				mostLeftParent->left = nullptr;
 			else
-			{
-				root = right;
-				root->left = current->left;
-				root->right = current->right;
-				if (right->right == nullptr)
-					previous_right->left = nullptr;
-				else
-					previous_right->left = right->right;
-			}
+				mostLeftParent->right = mostLeft->right;
 		}
 
-		delete current;
+		delete removed;
 
 		error_code = 0;
 	}
@@ -170,12 +146,24 @@ void BinaryTree::print_nodes(Node* peak)
 {
 	if (peak != nullptr)
 	{
-		cout << peak->value;
-		if (peak->left != nullptr)
-			cout << " - left: " << peak->left->value << ";";
-		if (peak->right != nullptr)
-			cout << " - right: " << peak->right->value;
-		cout << "; " << endl;
+		if (peak->left != nullptr || peak->right != nullptr)
+		{
+			if (peak->left != nullptr)
+			{
+				cout << peak->value;
+				cout << " -> left: " << peak->left->value << "; ";
+			}
+			if (peak->right != nullptr)
+			{
+				cout << peak->value;
+				cout << " -> right: " << peak->right->value << "; ";
+			}
+		}
+		else
+		{
+			cout << peak->value << ";";
+		}
+		cout << endl;
 		print_nodes(peak->left);
 		print_nodes(peak->right);
 	}

@@ -1,3 +1,2 @@
-﻿  main.cpp
-C:\Users\igorc\Documents\GitHub\tree-lab\tree-lab2\tree-lab2\main.cpp(6,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+﻿  BinaryTree.cpp
   tree-lab2.vcxproj -> C:\Users\igorc\Documents\GitHub\tree-lab\tree-lab2\x64\Debug\tree-lab2.exe
