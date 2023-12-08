@@ -5,6 +5,11 @@ BinaryTree::BinaryTree()
 	root = nullptr;
 }
 
+BinaryTree::~BinaryTree()
+{
+	delete_tree(root);
+}
+
 void BinaryTree::insert_element(int value, int& error_code)
 {
 	if (root == nullptr)
@@ -13,7 +18,8 @@ void BinaryTree::insert_element(int value, int& error_code)
 		root->value = value;
 		return;
 	}
-	Node* current = root, * previous;
+	Node* current = root;
+	Node* previous = current;
 
 	while (current != nullptr)
 	{
@@ -31,7 +37,7 @@ void BinaryTree::insert_element(int value, int& error_code)
 	error_code = 0;
 }
 
-void BinaryTree::remove_element(int value, int &error_code)
+void BinaryTree::remove_element(int value, int& error_code)
 {
 	if (root == nullptr)
 	{
@@ -53,33 +59,84 @@ void BinaryTree::remove_element(int value, int &error_code)
 		{
 			current->value < previous->value ? previous->left = nullptr : previous->right = nullptr;
 		}
-		else if(current->left == nullptr)
+		else if (current->left == nullptr)
 		{
-			current->value < previous->value ? previous->left = nullptr : previous->right = current->right;
+			current->value < previous->value ? previous->left = current->right : previous->right = current->right;
 		}
 		else if (current->right == nullptr)
 		{
-			current->value < previous->value ? previous->left = current->left : previous->right = nullptr;
+			current->value < previous->value ? previous->left = current->left : previous->right = current->left;
 		}
 		else
 		{
+			Node* right = current->right;
+			Node* previous_right = nullptr;
+			while (right->left != nullptr)
+			{
+				previous_right = right;
+				right = right->left;
+			}
 
+			if (previous != nullptr)
+			{
+				if (value < previous->value)
+				{
+					previous->left = right;
+					previous->left->left = current->left;
+					previous->left->right = current->right;
+					if (right->right == nullptr)
+						previous_right->left = nullptr;
+					else
+						previous_right->left = right->right;
+				}
+				else
+				{
+					previous->right = right;
+					previous->right->left = current->left;
+					previous->right->right = current->right;
+					if (right->right == nullptr)
+						previous_right->left = nullptr;
+					else
+						previous_right->left = right->right;
+				}
+			}
+			else
+			{
+				root = right;
+				root->left = current->left;
+				root->right = current->right;
+				if (right->right == nullptr)
+					previous_right->left = nullptr;
+				else
+					previous_right->left = right->right;
+			}
 		}
+
+		delete current;
+
+		error_code = 0;
+	}
+	else
+	{
+		error_code = 2;
 	}
 }
 
-int BinaryTree::find_element(int value)
+void BinaryTree::find_element(int value)
 {
 	Node* current = root;
 
 	while (current != nullptr)
 	{
 		if (current->value == value)
-			return (int)current;
+		{
+			cout << "Адрес элемента: " << current << endl;
+			return;
+		}
 		value < current->value ? current = current->left : current = current->right;
 	}
 
-	return -1;
+	cout << "Элемент не найден" << endl;
 }
 
 int BinaryTree::get_height()
@@ -99,7 +156,7 @@ int BinaryTree::get_nodes_max_height(Node* peak)
 	return 0;
 }
 
-void BinaryTree::print_tree(int &error_code)
+void BinaryTree::print_tree(int& error_code)
 {
 	if (root == nullptr)
 	{
@@ -113,10 +170,35 @@ void BinaryTree::print_nodes(Node* peak)
 {
 	if (peak != nullptr)
 	{
-		cout << peak->value << '\t';
+		cout << peak->value;
+		if (peak->left != nullptr)
+			cout << " - left: " << peak->left->value << ";";
+		if (peak->right != nullptr)
+			cout << " - right: " << peak->right->value;
+		cout << "; " << endl;
 		print_nodes(peak->left);
 		print_nodes(peak->right);
 	}
+}
+
+void BinaryTree::get_even_node(Node* peak, int& sum)
+{
+	if (peak != nullptr)
+	{
+		get_even_node(peak->left, sum);
+		get_even_node(peak->right, sum);
+		if (peak->value % 2 == 0)
+			sum++;
+	}
+}
+
+void BinaryTree::delete_tree(Node* peak)
+{
+	if (peak == nullptr)
+		return;
+	delete_tree(peak->left);
+	delete_tree(peak->right);
+	delete peak;
 }
 
 int BinaryTree::get_nodes_count()
@@ -126,7 +208,9 @@ int BinaryTree::get_nodes_count()
 
 int BinaryTree::get_even_nodes_sum()
 {
-
+	int sum = 0;
+	get_even_node(root, sum);
+	return sum;
 }
 
 int BinaryTree::get_nodes_count(Node* peak)

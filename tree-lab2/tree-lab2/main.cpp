@@ -1,5 +1,4 @@
 ﻿#include <iostream>
-#include "BinaryTree.h"
 #include "Functions.h"
 
 int main()
@@ -38,6 +37,12 @@ int main()
 			cin.ignore(10000, '\n');
 		}
 
+		if (command == 0)
+		{
+			cout << "Выход из программы..." << endl;
+			break;
+		}
+
 		switch (command)
 		{
 		case 1:
@@ -56,7 +61,7 @@ int main()
 			switch (error_code)
 			{
 			case 0:
-				cout << "Добавление произошло успешно !" << endl; 
+				cout << "Добавление произошло успешно!" << endl; 
 				break;
 			case 1:
 				cout << "Ошибка! Элемент с таким значением уже существует!" << endl; 
@@ -68,15 +73,15 @@ int main()
 		{
 			int element;
 			cout << "Введите элемент: ";
-			cin >> element;
+			while (!(cin >> element) || element > 100 || element < 0)
+			{
+				cout << "Ошибка! Элемент должен быть числом в диапазоне между [0,100]" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
+			}
 
-			int adress = tree->find_element(element);
-			if (adress == -1)
-				cout << "Элемент не найден!" << endl;
-			else
-				cout << "Элемент найден! Адрес элемента: " << adress << "\n";
+			tree->find_element(element);
 			break;
-			
 		}
 		case 3:
 		{
@@ -122,8 +127,7 @@ int main()
 		}
 		case 7:
 		{
-
-			cout << "Подсчёт суммы длин от корня до каждой из вершин,содержащей чётное число: " << sum(root, 0) << '\n';
+			cout << "Количество четных элементов: " << tree->get_even_nodes_sum() << '\n';
 			break;
 		}
 		default: 
@@ -132,6 +136,10 @@ int main()
 		}
 		cout << '\n';
 	}
+
+	delete tree;
+	system("pause");
+	return 0;
 }
 
 

@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+
 class BinaryTree
 {
 public:
@@ -9,10 +10,10 @@ public:
 	void print_tree(int &error_code);
 	void insert_element(int value, int& error_code);
 	void remove_element(int value, int& error_code);
-	int find_element(int value);
+	void find_element(int value);
+	int get_even_nodes_sum();
 	int get_height();
 	int get_nodes_count();
-	int get_even_nodes_sum();
 private:
 	class Node 
 	{
@@ -30,5 +31,7 @@ private:
 	int get_nodes_count(Node* peak);
 	int get_nodes_max_height(Node* peak);
 	void print_nodes(Node* peak);
+	void get_even_node(Node* peak, int &sum);
+	void delete_tree(Node* peak);
 	Node* root;
 };
