@@ -130,7 +130,7 @@ int main()
 		}
 		case 7:
 		{
-			cout << "Количество четных элементов: " << tree->get_even_nodes_sum() << '\n';
+			cout << "Сумма четных элементов: " << tree->get_even_nodes_sum() << '\n';
 			break;
 		}
 		default:

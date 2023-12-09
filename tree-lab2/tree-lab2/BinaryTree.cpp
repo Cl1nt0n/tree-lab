@@ -176,7 +176,7 @@ void BinaryTree::get_even_node(Node* peak, int& sum)
 		get_even_node(peak->left, sum);
 		get_even_node(peak->right, sum);
 		if (peak->value % 2 == 0)
-			sum++;
+			sum += peak->value;
 	}
 }
 
